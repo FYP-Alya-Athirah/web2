@@ -24,7 +24,12 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\ResetPassword;
 use App\Http\Controllers\ChangePassword;
-use App\Http\Controllers\StudentController;            
+use App\Http\Controllers\StudentController;    
+use App\Http\Controllers\TeacherController; 
+use App\Http\Controllers\ParentController; 
+use App\Http\Controllers\AdminController;     
+use App\Http\Controllers\CameraController;      
+use App\Http\Controllers\PhotoController; 
             
 
 Route::get('/', function () {return redirect('/dashboard');})->middleware('auth');
@@ -37,11 +42,30 @@ Route::get('/', function () {return redirect('/dashboard');})->middleware('auth'
 	Route::get('/change-password', [ChangePassword::class, 'show'])->middleware('guest')->name('change-password');
 	Route::post('/change-password', [ChangePassword::class, 'update'])->middleware('guest')->name('change.perform');
 	Route::get('/dashboard', [HomeController::class, 'index'])->name('home')->middleware('auth');
-	Route::get('/students-management', [StudentController::class, 'getList'])->name('students-management');
-	Route::post('/add-student', [StudentController::class, 'addStudent'])->name('add-student');
-	Route::get('/user-student/{id}', [StudentController::class, 'getStudent'])->name('get-student');
-	Route::post('/update-student/{id}', [StudentController::class, 'updateStudent'])->name('update-student');
+	Route::get('/camera-stream', [CameraController::class, 'index'])->name('camera-stream')->middleware('auth');
 
+	Route::get('/students-management', [StudentController::class, 'getList'])->name('students-management');
+	Route::post('/add-student', [StudentController::class, 'addStudent']);
+	Route::post('/update-student/{id}', [StudentController::class, 'updateStudent']);
+	Route::get('/delete-student/{id}', [StudentController::class, 'deleteStudent']);
+
+	Route::get('/teachers-management', [TeacherController::class, 'getList'])->name('teachers-management');
+	Route::post('/add-teacher', [TeacherController::class, 'addTeacher']);
+	Route::post('/update-teacher/{id}', [TeacherController::class, 'updateTeacher']);
+	Route::get('/delete-teacher/{id}', [TeacherController::class, 'deleteTeacher']);
+
+	Route::get('/parents-management', [ParentController::class, 'getList'])->name('parents-management');
+	Route::post('/add-parent', [ParentController::class, 'addParent']);
+	Route::post('/update-parent/{id}', [ParentController::class, 'updateParent']);
+	Route::get('/delete-parent/{id}', [ParentController::class, 'deleteParent']);
+
+	Route::get('/admins-management', [AdminController::class, 'getList'])->name('admins-management');
+	Route::post('/add-admin', [AdminController::class, 'addAdmin']);
+	Route::post('/update-admin/{id}', [AdminController::class, 'updateAdmin']);
+	Route::get('/delete-admin/{id}', [AdminController::class, 'deleteAdmin']);
+
+	Route::get('/photo-management', [ PhotoController::class, 'imageUpload' ])->name('photo-management');
+	Route::post('/photo-management', [ PhotoController::class, 'imageUploadPost' ])->name('photo-management-post');	
 
 Route::group(['middleware' => 'auth'], function () {
 	Route::get('/virtual-reality', [PageController::class, 'vr'])->name('virtual-reality');
