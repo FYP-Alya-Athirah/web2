@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\RegisterController;
@@ -30,6 +30,7 @@ use App\Http\Controllers\ParentController;
 use App\Http\Controllers\AdminController;     
 use App\Http\Controllers\CameraController;      
 use App\Http\Controllers\PhotoController; 
+use App\Http\Controllers\NoticeController; 
             
 
 Route::get('/', function () {return redirect('/dashboard');})->middleware('auth');
@@ -41,7 +42,7 @@ Route::get('/', function () {return redirect('/dashboard');})->middleware('auth'
 	Route::post('/reset-password', [ResetPassword::class, 'send'])->middleware('guest')->name('reset.perform');
 	Route::get('/change-password', [ChangePassword::class, 'show'])->middleware('guest')->name('change-password');
 	Route::post('/change-password', [ChangePassword::class, 'update'])->middleware('guest')->name('change.perform');
-	Route::get('/dashboard', [HomeController::class, 'index'])->name('home')->middleware('auth');
+	Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard')->middleware('auth');
 	Route::get('/camera-stream', [CameraController::class, 'index'])->name('camera-stream')->middleware('auth');
 
 	Route::get('/students-management', [StudentController::class, 'getList'])->name('students-management');
@@ -66,6 +67,8 @@ Route::get('/', function () {return redirect('/dashboard');})->middleware('auth'
 
 	Route::get('/photo-management', [ PhotoController::class, 'imageUpload' ])->name('photo-management');
 	Route::post('/photo-management', [ PhotoController::class, 'imageUploadPost' ])->name('photo-management-post');	
+	
+	Route::get('/notice-view', [ NoticeController::class, 'showNotice' ])->name('notice-view');
 
 Route::group(['middleware' => 'auth'], function () {
 	Route::get('/virtual-reality', [PageController::class, 'vr'])->name('virtual-reality');
@@ -77,5 +80,9 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/sign-up-static', [PageController::class, 'signup'])->name('sign-up-static'); 
 	Route::get('/{page}', [PageController::class, 'index'])->name('page');
 	Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+	Route::get('/children-management', [ StudentController::class, 'showChildren' ])->name('children-management');
 
 });
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

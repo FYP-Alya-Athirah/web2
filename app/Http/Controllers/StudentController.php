@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Students;
@@ -44,5 +45,35 @@ class StudentController extends Controller
         Students::destroy($id);
         return redirect('students-management');
     }
+    public function showChildren(){
+        $students = DB::table('students')
+        ->get();
+
+        //get user id
+        $userId = Auth::id();
+        //get parent id 
+        $parentID = DB::table('parents')
+        ->where('user_id', $userId)
+        ->get('id');
+
+        //get students IDs based on parent_id in table parent_student
+        $studentIDs = DB::table('parent_student')
+        ->whereIn('parent_id', $parentID)
+        ->get('student_id');
+
+        //get real student table
+        $student = DB::table('students')
+        ->whereIn('student_id', $studentIDs)
+        ->get();
+        
+
+        return view('pages.children-management', 
+            ['students' => $student,
+            'user' => Auth::user()],
+        );
+        // return view('pages.children-management');
+    }
+    // if user is not a parent -> show card to ask to be parent
+    // else show children list
 }
 
