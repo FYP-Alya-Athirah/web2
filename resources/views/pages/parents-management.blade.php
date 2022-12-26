@@ -9,10 +9,6 @@
                     <h6>Parents</h6>
                     <div class="d-flex align-items-center py-2">
                         <p class="mb-0">Parents List</p>
-                        <!-- Button trigger add modal -->
-                        <button type="button" class="btn btn-primary btn-sm ms-auto mb-0" data-bs-toggle="modal" data-bs-target="#addParentModal">
-                        Add New Parent
-                        </button>
                     </div>
 
                 </div>
@@ -22,22 +18,21 @@
                         <thead>
                             <tr>
                                 <th>Fullname</th>
-                                <th>Username</th>
                                 <th>Car Plate</th>
                                 <th>Phone Number</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($parents as $parent)
                             <tr>
                                 <td>{{$parent->fullname}}</td>
-                                <td>{{$parent->username}}</td>
                                 <td>{{$parent->carplate}}</td>
                                 <td>{{$parent->phone_number}}</td>
                                 <td><button type="button" class="btn btn-secondary btn-xs" data-bs-toggle="modal" data-bs-target="#editParentModal{{$parent->id}}" data-whatever="{{$parent->id}}" >
                                 Edit
                                 </button>&nbsp&nbsp
-                                <a class="btn btn-danger btn-xs" href="{{url('/delete-parent/'.$parent->id) }}" role="button" id="deleteButton{{$parent->id}}">Delete</a>
+                                <a class="btn btn-danger btn-xs" href="{{url('/delete-parent/'.$parent->id) }}" role="button" id="deleteButton{{$parent->id}}">Delete</a></td>
                             </tr>
                             <!-- Edit Modal -->
                             <div class="modal fade" id="editParentModal{{$parent->id}}" tabindex="-1" aria-labelledby="editParentModal{{$parent->id}}" aria-hidden="true" >
@@ -55,13 +50,6 @@
                                                     <input type="text" class="form-control input-text" id="validationCustom01" name="fullname" value ='{{$parent->fullname}}' required>
                                                     <div class="invalid-feedback">
                                                     Please enter full name
-                                                    </div>
-                                                </div>  
-                                                <div class="col-md-6">
-                                                    <label for="validationCustom02" class="form-label">User name</label>
-                                                    <input type="text" class="form-control input-text" id="validationCustom02" name="username" value ='{{$parent->username}}' required>
-                                                    <div class="invalid-feedback">
-                                                    Please enter user name
                                                     </div>
                                                 </div>
                                                 
@@ -95,9 +83,9 @@
                         <tfoot>
                             <tr>
                                 <th>Fullname</th>
-                                <th>Username</th>
                                 <th>Car Plate</th>
                                 <th>Phone Number</th>
+                                <th>Action</th>
                             </tr>
                         </tfoot>
                     </table>
@@ -108,57 +96,6 @@
         </div>
     </div>
 
-    <!-- Add Modal -->
-    <div class="modal fade" id="addParentModal" tabindex="-1" aria-labelledby="addParentModal" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form class="row g-3 needs-validation was-validated" novalidate method="POST" action="{{url('add-parent')}}">
-                @csrf
-                    <div class="col-md-6">
-                        <label for="validationCustom01" class="form-label">Full name</label>
-                        <input type="text" class="form-control input-text" id="validationCustom01" name="fullname" required>
-                        <div class="invalid-feedback">
-                        Please enter full name
-                        </div>
-                    </div>  
-                    <div class="col-md-6">
-                        <label for="validationCustom02" class="form-label">User name</label>
-                        <input type="text" class="form-control input-text" id="validationCustom02" name="username" required>
-                        <div class="invalid-feedback">
-                        Please enter user name
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-6">
-                        <label for="validationCustom03" class="form-label">Car plate</label>
-                        <input type="text" class="form-control input-text" id="validationCustom03" name="class" required>
-                        <div class="invalid-feedback">
-                        Please enter car plate
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <label for="validationCustom04" class="form-label">Phone number</label>
-                        <input type="text" class="form-control input-text" id="validationCustom04" name="class" required>
-                        <div class="invalid-feedback">
-                        Please enter phone number
-                        </div>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button class="btn btn-primary" type="submit">Save changes</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    </div>
 
 @endsection
 

@@ -137,7 +137,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Add Student</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -251,7 +251,7 @@
     if (mm < 10) {
     mm = '0' + mm
     }
-
+    dd = dd - 1;
     today = yyyy + '-' + mm + '-' + dd;
     document.getElementById("birthday_field").setAttribute("max", today);
 </script>

@@ -66,7 +66,14 @@ return [
             'ignorePassiveAddress' => true, 
             'port' => 21,
             'timeout' => 30,
-         ]
+        ],
+        
+        'disks' => [
+            'driver' => 'local',
+            'root'   => 'D:/Github/facial-recognition/Object Detection ESP32Cam',
+            'visibility' => 'public',
+            'throw' => false,
+        ]
 
     ],
 

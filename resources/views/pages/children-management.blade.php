@@ -6,16 +6,25 @@
         <div class="col-12">
             <div class="card mb-4">
                 <div class="card-header pb-0">
-                    <h6>Children</h6>
+                    <h6>{{ Session::get('success') }}</h6>
                     <div class="d-flex align-items-center py-2">
                         <p class="mb-0">Children List</p>
                         <!-- Button trigger add modal -->
-                        <button type="button" class="btn btn-primary btn-sm ms-auto mb-0" data-bs-toggle="modal" data-bs-target="#addChildModal">
-                        Add Child
-                        </button>
+                        @if($user->role == 0)   
+                            <button type="button" class="btn btn-primary btn-sm ms-auto mb-0" data-bs-toggle="modal" data-bs-target="#registerParentModal">
+                            Register Parent
+                            </button>      
+                        @else
+                            <button type="button" class="btn btn-primary btn-sm ms-auto mb-0" data-bs-toggle="modal" data-bs-target="#addChildModal">
+                            Add Child
+                            </button>   
+                        @endif
+                        
                     </div>
-
                 </div>
+                @if($user->role ==0)   
+    
+                @else
                 <div class="card-body px-4 pt-0 pb-2">
                     <div class="table-responsive p-0">
                     <table id="children-table" class="table display" style="width:100%">
@@ -41,7 +50,7 @@
                                 <td>{{$student->pickup_session}}</td>
                                 <td>
                                     </button>
-                                    <a class="btn btn-danger btn-xs" href="{{url('/delete-student/'.$student->id) }}" role="button" id="deleteButton{{$student->id}}">Delete</a>
+                                    <a class="btn btn-danger btn-xs" href="{{url('/delete-child/'.$student->id) }}" role="button" id="deleteButton{{$student->id}}">Remove</a>
                                 </td>
                             </tr>
                             @endforeach
@@ -61,37 +70,73 @@
 
                     </div>
                 </div>
+                @endif
+                
             </div>
         </div>
     </div>
     </div>
     <!-- Add Modal -->
     <div class="modal fade" id="addChildModal" tabindex="-1" aria-labelledby="addChildModal" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form class="row g-3 needs-validation was-validated" novalidate method="POST" action="{{url('add-student')}}">
-                @csrf
-                    <div class="col-md-12">
-                        <label for="validationCustom02" class="form-label">IC Number</label>
-                        <input type="text" class="form-control" id="validationCustom02" name="ic_number" placeholder="EX: 012345678910" required>
-                        <div class="invalid-feedback">
-                        Please enter IC number
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="row g-3 needs-validation was-validated" novalidate method="POST" action="{{url('add-student')}}">
+                    @csrf
+                        <div class="col-md-12">
+                            <label for="validationCustom02" class="form-label">IC Number</label>
+                            <input type="text" class="form-control" id="validationCustom02" name="ic_number" placeholder="EX: 012345678910" required>
+                            <div class="invalid-feedback">
+                            Please enter IC number
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button class="btn btn-primary" type="submit">Save changes</button>
-                    </div>
-                </form>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button class="btn btn-primary" type="submit">Save changes</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
+    <!-- Register Parent -->
+    <div class="modal fade" id="registerParentModal" tabindex="-1" aria-labelledby="registerParentModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="row g-3 needs-validation was-validated" novalidate method="POST" action="{{url('register-parent')}}">
+                    @csrf
+                        <div class="col-md-8">
+                            <label for="validationCustom01" class="form-label">Car Plate</label>
+                            <input type="text" class="form-control" id="validationCustom01" name="carplate" required>
+                            <div class="invalid-feedback">
+                            Please enter car plate
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <label for="validationCustom02" class="form-label">Phone Number</label>
+                            <input type="text" class="form-control" id="validationCustom02" name="phone_number" required>
+                            <div class="invalid-feedback">
+                            Please enter phone number
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button class="btn btn-primary" type="submit">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 

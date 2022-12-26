@@ -30,12 +30,15 @@ class PhotoController extends Controller
     
         // $imageName = time().'.'.$request->image->extension();  
         $imageName = $request->file('image')->getClientOriginalName();
+        //Upload file to recognition project
+        // Storage::disk('disks')->put($imageName, 'image');
 
         //Upload file to FTP server
         Storage::disk('ftp')->put($imageName, fopen($request->file('image'), 'r+'));
         
-        //Upload file to public foler
+        //Upload file to public folder
         $request->image->move(public_path('images'), $imageName);
+
 
         /* Store $imageName name in DATABASE from HERE */
     

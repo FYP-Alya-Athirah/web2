@@ -31,7 +31,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CameraController;      
 use App\Http\Controllers\PhotoController; 
 use App\Http\Controllers\NoticeController; 
-            
+use App\Http\Controllers\AttendanceController; 
 
 Route::get('/', function () {return redirect('/dashboard');})->middleware('auth');
 	Route::get('/register', [RegisterController::class, 'create'])->middleware('guest')->name('register');
@@ -69,6 +69,11 @@ Route::get('/', function () {return redirect('/dashboard');})->middleware('auth'
 	Route::post('/photo-management', [ PhotoController::class, 'imageUploadPost' ])->name('photo-management-post');	
 	
 	Route::get('/notice-view', [ NoticeController::class, 'showNotice' ])->name('notice-view');
+	Route::get('/children-management', [ StudentController::class, 'showChildren' ])->name('children-management');
+	Route::post('/register-parent', [ StudentController::class, 'registerParent' ])->name('register-parent');
+	Route::get('/delete-child/{id}', [StudentController::class, 'deleteChild']);
+
+	Route::get('/attendance-list', [AttendanceController::class, 'getList'])->name('attendance-list');
 
 Route::group(['middleware' => 'auth'], function () {
 	Route::get('/virtual-reality', [PageController::class, 'vr'])->name('virtual-reality');
@@ -80,8 +85,6 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/sign-up-static', [PageController::class, 'signup'])->name('sign-up-static'); 
 	Route::get('/{page}', [PageController::class, 'index'])->name('page');
 	Route::post('logout', [LoginController::class, 'logout'])->name('logout');
-	Route::get('/children-management', [ StudentController::class, 'showChildren' ])->name('children-management');
-
 });
 Auth::routes();
 
