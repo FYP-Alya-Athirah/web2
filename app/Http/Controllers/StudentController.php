@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Students;
 use App\Models\Parents;
 use App\Models\User;
-use Illuminate\Support\Arr;
 
 class StudentController extends Controller
 {

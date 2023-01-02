@@ -56,7 +56,6 @@ Route::get('/', function () {return redirect('/dashboard');})->middleware('auth'
 	Route::get('/delete-teacher/{id}', [TeacherController::class, 'deleteTeacher']);
 
 	Route::get('/parents-management', [ParentController::class, 'getList'])->name('parents-management');
-	Route::post('/add-parent', [ParentController::class, 'addParent']);
 	Route::post('/update-parent/{id}', [ParentController::class, 'updateParent']);
 	Route::get('/delete-parent/{id}', [ParentController::class, 'deleteParent']);
 
@@ -69,6 +68,8 @@ Route::get('/', function () {return redirect('/dashboard');})->middleware('auth'
 	Route::post('/photo-management', [ PhotoController::class, 'imageUploadPost' ])->name('photo-management-post');	
 	
 	Route::get('/notice-view', [ NoticeController::class, 'showNotice' ])->name('notice-view');
+	Route::get('/notice-view-admin', [ NoticeController::class, 'showNoticeAdmin' ])->name('notice-view-admin');
+	
 	Route::get('/children-management', [ StudentController::class, 'showChildren' ])->name('children-management');
 	Route::post('/register-parent', [ StudentController::class, 'registerParent' ])->name('register-parent');
 	Route::get('/delete-child/{id}', [StudentController::class, 'deleteChild']);
