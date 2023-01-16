@@ -10,11 +10,7 @@
                     <div class="d-flex align-items-center py-2">
                         <p class="mb-0">Children List</p>
                         <!-- Button trigger add modal -->
-                        @if($user->role == 0)   
-                            <button type="button" class="btn btn-primary btn-sm ms-auto mb-0" data-bs-toggle="modal" data-bs-target="#registerParentModal">
-                            Register Parent
-                            </button>      
-                        @else
+                        @if($user->role == 1)   
                             <button type="button" class="btn btn-primary btn-sm ms-auto mb-0" data-bs-toggle="modal" data-bs-target="#addChildModal">
                             Add Child
                             </button>   
@@ -22,54 +18,59 @@
                         
                     </div>
                 </div>
-                @if($user->role ==0)   
-    
-                @else
-                <div class="card-body px-4 pt-0 pb-2">
-                    <div class="table-responsive p-0">
-                    <table id="children-table" class="table display" style="width:100%">
-                        <thead>
-                            <tr>
-                                <th>Fullname</th>
-                                <th>IC Number</th>
-                                <th>Birthday</th>
-                                <th>Gender</th>
-                                <th>Class</th>
-                                <th>Pickup Schedule</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($students as $student)
-                            <tr>
-                                <td>{{$student->fullname}}</td>
-                                <td>{{$student->ic_number}}</td>
-                                <td>{{$student->birthday}}</td>
-                                <td>{{$student->gender}}</td>
-                                <td>{{$student->class}}</td>
-                                <td>{{$student->pickup_session}}</td>
-                                <td>
-                                    </button>
-                                    <a class="btn btn-danger btn-xs" href="{{url('/delete-child/'.$student->id) }}" role="button" id="deleteButton{{$student->id}}">Remove</a>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <th>Fullname</th>
-                                <th>IC Number</th>
-                                <th>Birthday</th>
-                                <th>Gender</th>
-                                <th>Class</th>
-                                <th>Pickup Schedule</th>
-                                <th>Action</th>
-                            </tr>
-                        </tfoot>
-                    </table>
-
+                @if($user->role == 0)   
+                    <div class="card-body px-4 pt-0 pb-2">
+                    <button type="button" class="btn btn-primary btn-sm ms-auto mb-0" data-bs-toggle="modal" data-bs-target="#registerParentModal">
+                        Register Parent
+                    </button>
                     </div>
-                </div>
+                @else
+                    <div class="card-body px-4 pt-0 pb-2">
+                        <div class="table-responsive p-0">
+                        <table id="children-table" class="table display" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Fullname</th>
+                                    <th>IC Number</th>
+                                    <th>Birthday</th>
+                                    <th>Gender</th>
+                                    <th>Class</th>
+                                    <th>Pickup Schedule</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($students as $student)
+                                <tr>
+                                    <td>{{$student->fullname}}</td>
+                                    <td>{{$student->ic_number}}</td>
+                                    <td>{{$student->birthday}}</td>
+                                    <td>{{$student->gender}}</td>
+                                    <td>{{$student->class}}</td>
+                                    <td>{{$student->pickup_session}}</td>
+                                    <td>
+                                        <a class="btn btn-danger btn-xs" href="{{url('/photos-child/'.$student->id) }}" role="button" id="goPhotosButton{{$student->id}}">Photos</a>
+                                        &nbsp&nbsp
+                                        <a class="btn btn-danger btn-xs" href="{{url('/delete-child/'.$student->id) }}" role="button" id="deleteButton{{$student->id}}">Remove</a>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Fullname</th>
+                                    <th>IC Number</th>
+                                    <th>Birthday</th>
+                                    <th>Gender</th>
+                                    <th>Class</th>
+                                    <th>Pickup Schedule</th>
+                                    <th>Action</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+                        </div>
+                    </div>
                 @endif
                 
             </div>
@@ -85,7 +86,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form class="row g-3 needs-validation was-validated" novalidate method="POST" action="{{url('add-student')}}">
+                    <form class="row g-3 needs-validation was-validated" novalidate method="POST" action="{{url('add-child')}}">
                     @csrf
                         <div class="col-md-12">
                             <label for="validationCustom02" class="form-label">IC Number</label>

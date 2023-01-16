@@ -54,25 +54,27 @@
                         </div>
                     </div>
                     <!-- Array of photos from database -->
-                    <!-- <div class="row">
+                    <div class="row">
+                    @foreach ($photos as $photo)
                         <div class="col-md-4">
                             <div class="card card-profile">
-                                <img src="images/{{ Session::get('image') }}" class="card">
+                                <img src="{{ url('/images/'.$photo->path) }}" class="max-height-300" style="height:auto;width:auto;margin:auto;">
                                 <div class="card-header text-center border-0 pt-0 pt-lg-2 pb-4 pb-lg-3">
                                 </div>
                                 <div class="card-body pt-0">
                                     <div class="text-center mt-4">
                                         <h5>
-                                            Photo 1</span>
+                                            Photo</span>
                                         </h5>
-                                        <div>
+                                        <!-- <div>
                                             <i class="ni education_hat mr-2"></i>Uploaded ...
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div> -->
+                    @endforeach
+                    </div>
                     @if ($message = Session::get('success'))
                     <div class="row">
                         <div class="col-md-4">

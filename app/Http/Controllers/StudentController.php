@@ -7,7 +7,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Students;
 use App\Models\Parents;
+use App\Models\ParentStudent;
 use App\Models\User;
+use phpDocumentor\Reflection\DocBlock\Tags\Var_;
+use Symfony\Component\VarDumper\VarDumper;
 
 class StudentController extends Controller
 {
@@ -69,11 +72,36 @@ class StudentController extends Controller
 
         return redirect('children-management');
     }
-    public function ifParent(){
+    public function addChild(Request $request)
+    {
+        //get user id
+        $userId = Auth::user()->id;
 
+        //get parent id 
+        $parents = DB::table('parents')
+        ->where('user_id', '=', $userId)
+        ->first();
+        $parentID = $parents->id;
+
+        //find student based on IC number
+        $student = DB::table('students')
+            ->where('ic_number', '=', $request->input('ic_number'))
+            ->first();
+
+
+        $post = new ParentStudent;
+        $post->parent_id = $parentID;
+        $post->student_id = $student->id;
+        $post->save();
+        return redirect('children-management');
     }
     public function showChildren(){
-        if(Auth::user()->role == 0){
+        if(Auth::user()->role != 1){
+            // return view('pages.children-management', 
+            //     [
+            //     'user' => Auth::user(),
+            //     ],
+            // );
             return view('pages.children-management', 
                 [
                 'user' => Auth::user(),
@@ -81,42 +109,41 @@ class StudentController extends Controller
             );
         }
         else{
-            // $students = DB::table('students')
-            // ->get();
+            //get user id
+            $userId = Auth::user()->id;
+            
+            //get parent id 
+            $parents = DB::table('parents')
+            ->where('user_id', '=', $userId)
+            ->first();
+            $parentID = $parents->id;
+            
+            //join tables students-parent
+            $students = DB::table('students')
+            ->select('students.id','students.fullname','students.ic_number','students.birthday',
+            'students.gender','students.class','students.pickup_session')
+            ->join('parent_student','parent_student.student_id','=','students.id')
+            ->where('parent_student.parent_id', '=', $parentID)
+            ->get();
 
-            // //get user id
-            // $userId = Auth::user()->id;
-            // //get parent id 
-            // $parents = DB::table('parents')
-            // ->where('user_id', '=', $userId)
-            // ->get();
-            // $parentID = $parents->id;
-
-            // //get students IDs based on parent_id in table parent_student
-            // $studentIDs = DB::table('parent_student')
-            // ->select('student_id')
+            //join tables students-parent
+            // $photos = DB::table('photo_laravel')
+            // ->select('students.id','photo_laravel.role',
+            // 'photo_laravel.path','students.birthday')
+            // ->join('students','students.id','=','photo_laravel.person_id')
             // ->where('parent_id', '=', $parentID)
             // ->get();
 
-            $studentIDs = [10];
-            //get real student table
-            $students = DB::table('students')
-            ->whereIn('id', $studentIDs)
-            ->get();
-            
-
             return view('pages.children-management', 
                 ['students' => $students,
+                // 'photos' => $photos,
                 'user' => Auth::user()],
             );
         }
-        // $students = DB::table('students')->get();
-
-        // return view('pages.children-management', ['students' => $students, 'user' => Auth::user()]);
 
     }
     public function deleteChild($id){
-        // Students::destroy($id);
+        $student = ParentStudent::where('student_id', $id)->firstorfail()->delete();
         return redirect('children-management');
     }
     // if user is not a parent -> show card to ask to be parent

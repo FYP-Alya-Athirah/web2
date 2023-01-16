@@ -19,8 +19,10 @@ Route::get('/', function () {
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
-use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\LoginController;
+// use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\LoginController;
+// use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\ResetPassword;
 use App\Http\Controllers\ChangePassword;
@@ -72,7 +74,9 @@ Route::get('/', function () {return redirect('/dashboard');})->middleware('auth'
 	
 	Route::get('/children-management', [ StudentController::class, 'showChildren' ])->name('children-management');
 	Route::post('/register-parent', [ StudentController::class, 'registerParent' ])->name('register-parent');
+	Route::post('/add-child', [StudentController::class, 'addChild']);
 	Route::get('/delete-child/{id}', [StudentController::class, 'deleteChild']);
+	Route::get('/photos-child/{id}', [ PhotoController::class, 'showChildPhotos' ]);
 
 	Route::get('/attendance-list', [AttendanceController::class, 'getList'])->name('attendance-list');
 
@@ -89,4 +93,4 @@ Route::group(['middleware' => 'auth'], function () {
 });
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('home');
