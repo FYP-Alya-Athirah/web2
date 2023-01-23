@@ -66,8 +66,8 @@ Route::get('/', function () {return redirect('/dashboard');})->middleware('auth'
 	Route::post('/update-admin/{id}', [AdminController::class, 'updateAdmin']);
 	Route::get('/delete-admin/{id}', [AdminController::class, 'deleteAdmin']);
 
-	Route::get('/photo-management', [ PhotoController::class, 'imageUpload' ])->name('photo-management');
-	Route::post('/photo-management', [ PhotoController::class, 'imageUploadPost' ])->name('photo-management-post');	
+	// Route::get('/photo-management', [ PhotoController::class, 'imageUpload' ])->name('photo-management');
+	// Route::post('/photo-management', [ PhotoController::class, 'imageUploadPost' ])->name('photo-management-post');	
 	
 	Route::get('/notice-view', [ NoticeController::class, 'showNotice' ])->name('notice-view');
 	Route::get('/notice-view-admin', [ NoticeController::class, 'showNoticeAdmin' ])->name('notice-view-admin');
@@ -76,7 +76,8 @@ Route::get('/', function () {return redirect('/dashboard');})->middleware('auth'
 	Route::post('/register-parent', [ StudentController::class, 'registerParent' ])->name('register-parent');
 	Route::post('/add-child', [StudentController::class, 'addChild']);
 	Route::get('/delete-child/{id}', [StudentController::class, 'deleteChild']);
-	Route::get('/photos-child/{id}', [ PhotoController::class, 'showChildPhotos' ]);
+	Route::get('/photos-child/{id}', [ PhotoController::class, 'photosChild' ]);
+	Route::post('/photo-upload-child/{id}/{role}', [ PhotoController::class, 'imageUploadChild' ])->name('photo-upload-child');
 
 	Route::get('/attendance-list', [AttendanceController::class, 'getList'])->name('attendance-list');
 

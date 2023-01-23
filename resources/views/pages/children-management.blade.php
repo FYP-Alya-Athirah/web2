@@ -49,7 +49,7 @@
                                     <td>{{$student->class}}</td>
                                     <td>{{$student->pickup_session}}</td>
                                     <td>
-                                        <a class="btn btn-danger btn-xs" href="{{url('/photos-child/'.$student->id) }}" role="button" id="goPhotosButton{{$student->id}}">Photos</a>
+                                        <a class="btn btn-secondary btn-xs" href="{{url('/photos-child/'.$student->id) }}" role="button" id="goPhotosButton{{$student->id}}">Photos</a>
                                         &nbsp&nbsp
                                         <a class="btn btn-danger btn-xs" href="{{url('/delete-child/'.$student->id) }}" role="button" id="deleteButton{{$student->id}}">Remove</a>
                                     </td>

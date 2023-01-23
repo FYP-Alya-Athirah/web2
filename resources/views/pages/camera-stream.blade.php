@@ -17,9 +17,9 @@
                         <img id="stream" src="http://192.168.100.15:81/stream" crossorigin>
                     </div> -->
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="card card-profile">
-                                <img id="stream" src="http://192.168.100.15:81/stream" alt="Image placeholder" class="card" crossorigin>
+                                <img id="stream" src="http://192.168.100.15:81/stream" alt="Image placeholder" class="card max-height-500 min-height-500" style="height:auto;width:auto;margin:auto;" crossorigin>
                                 <div class="card-header text-center border-0 pt-0 pt-lg-2 pb-4 pb-lg-3">
                                 </div>
                                 <div class="card-body pt-0">
@@ -34,9 +34,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="card card-profile">
-                                <img id="stream2" src="http://192.168.100.35:8000/stream.mjpg" class="card">
+                                <img id="stream2" src="http://192.168.100.35:8000/stream.mjpg"class="card max-height-500 min-height-500" style="height:auto;width:auto;margin:auto;">
                                 <div class="card-header text-center border-0 pt-0 pt-lg-2 pb-4 pb-lg-3">
                                 </div>
                                 <div class="card-body pt-0">

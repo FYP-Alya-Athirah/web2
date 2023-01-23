@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class PhotoAI extends Model
 {
     use HasFactory;
+    protected $table = 'photo_ai';
+    public $timestamps = false;
 }

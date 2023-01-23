@@ -6,7 +6,7 @@
         <div class="col-12">
             <div class="card mb-4">
                 <div class="card-header pb-0">
-                    <h6>Students List</h6>
+                    <h6>Students Attendance List</h6>
                     <div class="d-flex align-items-center py-2">
                         <p class="mb-0">Attendance</p>
                     </div>

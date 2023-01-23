@@ -34,8 +34,7 @@
                                     </ul>
                                 </div>
                             @endif
-                        
-                            <form action="{{ route('photo-management-post') }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ url('photo-upload-child/'.$id.'/'.$role) }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
                         
