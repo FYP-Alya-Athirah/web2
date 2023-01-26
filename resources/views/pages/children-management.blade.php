@@ -82,7 +82,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Adding Child to Account</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -90,12 +90,12 @@
                     @csrf
                         <div class="col-md-12">
                             <label for="validationCustom02" class="form-label">IC Number</label>
-                            <input type="text" class="form-control" id="validationCustom02" name="ic_number" placeholder="EX: 012345678910" required>
+                            <input type="text" class="form-control" id="childICnum" name="ic_number" placeholder="EX: 012345678910" onkeyup="getMessage()" required>
                             <div class="invalid-feedback">
                             Please enter IC number
                             </div>
                         </div>
-
+                        <div id='ic_msg'>There is no such student in the system.</div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             <button class="btn btn-primary" type="submit">Save changes</button>
@@ -174,6 +174,21 @@
         $('#children-table').DataTable();
     });
 
+
+</script>
+<script>
+    function getMessage() {
+        $.ajax({
+            type:'POST',
+            headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url:'show-child/'+document.getElementById("childICnum").value,
+            success:function(data) {
+                $("#ic_msg").html(data.ic_msg);
+            }
+        });
+    }
 </script>
 
 <!-- jQuery Script -->
@@ -181,5 +196,4 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 <!-- Datatable Script -->
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
-
 @endpush

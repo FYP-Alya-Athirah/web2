@@ -9,6 +9,9 @@
                     <h6>Teachers</h6>
                     <div class="d-flex align-items-center py-2">
                         <p class="mb-0">Teachers List</p>
+                        <button type="button" class="btn btn-primary btn-sm ms-auto mb-0" data-bs-toggle="modal" data-bs-target="#addTeacherModal">
+                            Add Teacher
+                            </button>   
                     </div>
 
                 </div>
@@ -18,7 +21,6 @@
                         <thead>
                             <tr>
                                 <th>Fullname</th>
-                                <th>Car Plate</th>
                                 <th>Phone Number</th>
                                 <th>Action</th>
                             </tr>
@@ -27,7 +29,6 @@
                             @foreach ($teachers as $teacher)
                             <tr>
                                 <td>{{$teacher->fullname}}</td>
-                                <td>{{$teacher->carplate}}</td>
                                 <td>{{$teacher->phone_number}}</td>
                                 <td><button type="button" class="btn btn-secondary btn-xs" data-bs-toggle="modal" data-bs-target="#editTeacherModal{{$teacher->id}}" data-whatever="{{$teacher->id}}" >
                                 Edit
@@ -50,14 +51,6 @@
                                                     <input type="text" class="form-control input-text" id="validationCustom01" name="fullname" value ='{{$teacher->fullname}}' required>
                                                     <div class="invalid-feedback">
                                                     Please enter full name
-                                                    </div>
-                                                </div>
-                                                
-                                                <div class="col-md-6">
-                                                    <label for="validationCustom03" class="form-label">Car plate</label>
-                                                    <input type="text" class="form-control input-text" id="validationCustom03" name="class" value ='{{$teacher->carplate}}' required>
-                                                    <div class="invalid-feedback">
-                                                    Please enter car plate
                                                     </div>
                                                 </div>
 
@@ -83,7 +76,6 @@
                         <tfoot>
                             <tr>
                                 <th>Fullname</th>
-                                <th>Car Plate</th>
                                 <th>Phone Number</th>
                                 <th>Action</th>
                             </tr>
@@ -95,7 +87,48 @@
             </div>
         </div>
     </div>
-
+<!-- Add Modal -->
+<div class="modal fade" id="addTeacherModal" tabindex="-1" aria-labelledby="addTeacherModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Adding Teacher</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="row g-3 needs-validation was-validated" novalidate method="POST" action="{{url('add-teacher')}}">
+                    @csrf
+                        <div class="col-md-12">
+                            <label for="validationCustom02" class="form-label">User ID</label>
+                            <input type="text" class="form-control" id="userID" name="user_id" placeholder="" onkeyup="getMessage()" required>
+                            <div class="invalid-feedback">
+                            Please enter user id
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="validationCustom02" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="teacher_fullname" name="fullname" placeholder="" onkeyup="getMessage()" required>
+                            <div class="invalid-feedback">
+                            Please enter teacher's fullname
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <label for="validationCustom02" class="form-label">Phone Number</label>
+                            <input type="text" class="form-control" id="validationCustom02" name="phone_number" required>
+                            <div class="invalid-feedback">
+                            Please enter phone number
+                            </div>
+                        </div>
+                        <div id='user_msg'>There is no such user in the system.</div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button class="btn btn-primary" type="submit">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
 @endsection
 
@@ -137,21 +170,20 @@
 
 </script>
 <script>
-    //date before today
-    var today = new Date();
-    var dd = today.getDate();
-    var mm = today.getMonth() + 1; //January is 0!
-    var yyyy = today.getFullYear();
-    if (dd < 10) {
-    dd = '0' + dd
+    function getMessage() {
+        $.ajax({
+            type:'POST',
+            headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url:'show-user/'+document.getElementById("userID").value,
+            success:function(data) {
+                $("#user_msg").html(data.user_msg);
+            }
+        });
     }
-    if (mm < 10) {
-    mm = '0' + mm
-    }
-
-    today = yyyy + '-' + mm + '-' + dd;
-    document.getElementById("birthday_field").setAttribute("max", today);
 </script>
+
 <!-- jQuery Script -->
 <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>

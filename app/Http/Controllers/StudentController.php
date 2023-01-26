@@ -146,6 +146,17 @@ class StudentController extends Controller
         $student = ParentStudent::where('student_id', $id)->firstorfail()->delete();
         return redirect('children-management');
     }
+    public function showChild($icnumber){
+        //show child before 
+        $msg = "There is no such student in the system.";
+        $student = Students::where('ic_number', $icnumber)->first();
+
+        
+        if($student->count()>0){
+            $msg = "Found: ".($student->fullname);
+        }
+        return response()->json(array('ic_msg'=> $msg), 200);
+    }
     // if user is not a parent -> show card to ask to be parent
     // else show children list
 }

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @include('layouts.navbars.auth.topnav', ['title' => 'Photos Management'])
+    @include('layouts.navbars.auth.topnav', ['title' => 'Child Photos Management'])
     <div class="row mt-4 mx-4">
         <div class="col-12">
             <div class="card mb-4">
@@ -18,9 +18,17 @@
                         <div class="panel-body">
                         
                             @if ($message = Session::get('success'))
-                            <div class="alert alert-success alert-block">
+                            <!-- <div class="alert alert-success alert-block">
                                 <button type="button" class="btn-close p-0 fixed-plugin-close-button" data-dismiss="alert"></button>
                                     <strong>{{ $message }}</strong>
+                            </div> -->
+
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <span class="alert-icon"><i class="ni ni-like-2"></i></span>
+                                <span class="alert-text"><strong>Success!</strong> This is a success alert—check it out!</span>
+                                <button type="button" class="btn-close" data-dismiss="alert" data-bs-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
                             </div>
                             @endif
                         
@@ -34,7 +42,7 @@
                                     </ul>
                                 </div>
                             @endif
-                            <form action="{{ url('photo-upload-child/'.$id.'/'.$role) }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ url('photo-upload-child/'.$id) }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-6">
@@ -59,12 +67,9 @@
                                 </div>
                                 <div class="card-body pt-0">
                                     <div class="text-center mt-4">
-                                        <h5>
-                                            Photo</span>
-                                        </h5>
-                                        <!-- <div>
-                                            <i class="ni education_hat mr-2"></i>Uploaded ...
-                                        </div> -->
+                                        <div>
+                                            <i class="ni education_hat mr-2"></i>Photo
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -78,6 +83,7 @@
         </div>
     </div>
 @push('js')
+
 
 @endpush
 @push('css')

@@ -56,6 +56,8 @@ Route::get('/', function () {return redirect('/dashboard');})->middleware('auth'
 	Route::post('/add-teacher', [TeacherController::class, 'addTeacher']);
 	Route::post('/update-teacher/{id}', [TeacherController::class, 'updateTeacher']);
 	Route::get('/delete-teacher/{id}', [TeacherController::class, 'deleteTeacher']);
+	Route::post('/show-user/{id}', [TeacherController::class, 'showUser']);
+
 
 	Route::get('/parents-management', [ParentController::class, 'getList'])->name('parents-management');
 	Route::post('/update-parent/{id}', [ParentController::class, 'updateParent']);
@@ -76,8 +78,12 @@ Route::get('/', function () {return redirect('/dashboard');})->middleware('auth'
 	Route::post('/register-parent', [ StudentController::class, 'registerParent' ])->name('register-parent');
 	Route::post('/add-child', [StudentController::class, 'addChild']);
 	Route::get('/delete-child/{id}', [StudentController::class, 'deleteChild']);
+	Route::post('/show-child/{icnumber}', [StudentController::class, 'showChild']);
+
 	Route::get('/photos-child/{id}', [ PhotoController::class, 'photosChild' ]);
-	Route::post('/photo-upload-child/{id}/{role}', [ PhotoController::class, 'imageUploadChild' ])->name('photo-upload-child');
+	Route::post('/photo-upload-child/{id}', [ PhotoController::class, 'imageUploadChild' ])->name('photo-upload-child');
+	Route::get('/photos-parent/{id}', [ PhotoController::class, 'photosParent' ]);
+	Route::post('/photo-upload-parent/{id}', [ PhotoController::class, 'imageUploadParent' ])->name('photo-upload-parent');
 
 	Route::get('/attendance-list', [AttendanceController::class, 'getList'])->name('attendance-list');
 
