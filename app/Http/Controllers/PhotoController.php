@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\PhotoAI;
 use App\Models\PhotoLaravel;
 use App\Models\Students;
+use App\Models\Parents;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
@@ -81,16 +82,17 @@ class PhotoController extends Controller
         ; 
 
     }
-    public function imageUploadParent($id,Request $request)
+    public function imageUploadParent(Request $request)
     {
         $request->validate([
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
         $role = 2;
         // find parent name
-        $student = Students::where('id', $id)->first();
+        $userid = Auth::user()->id;
+        $parent = Parents::where('user_id', $userid)->first();
         //give function the id and role too
-        $this->imageUploadPost($student->fullname, $id, $role, $request);
+        $this->imageUploadPost($parent->fullname, $parent->id, $role, $request);
         return back()
             ->with('success','You have successfully upload image.')
         ; 
@@ -127,18 +129,22 @@ class PhotoController extends Controller
         'id' => $id,
         'role' => $role]);
     }
-    public function photosParent($id){
+    public function photosParent(){
+        $userid = Auth::user()->id;
+        $parent = Parents::where('user_id', $userid)->first();
         //join tables students-parent
         $photos = DB::table('photo_laravel')
-        ->where(['person_id' => $id, 
-                'role' => '1'])
+        ->where(['person_id' => $parent->id, 
+                'role' => '2'])
         ->get();
         // $photos = $id;
         $role = 1;
         return view('pages.photo-parent-management', 
-        ['photos' => $photos,
-        'id' => $id,
-        'role' => $role]);
+            ['photos' => $photos,
+            'id' => $parent->id,
+            'role' => $role,
+            'user' => Auth::user(),
+        ]);
     }
 }
 ?>

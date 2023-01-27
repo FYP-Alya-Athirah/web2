@@ -23,6 +23,9 @@
                                 <th>Status</th>
                             </tr>
                         </thead>
+                        <script>
+                            var studentIDs = [];
+                        </script>
                         <tbody>
                             @foreach ($students as $student)
                             <tr>
@@ -33,14 +36,21 @@
                                 <td class="align-middle text-center text-sm">
                                     <?php
                                         if ($student->attend == "1") {
-                                            echo "<span class='badge badge-sm bg-success'>Attended</span>";
+                                            echo "<span id=status-";
+                                            echo $student->id;
+                                            echo " class='badge badge-sm bg-success'>Attended</span>";
                                         }
                                         elseif ($student->attend == "0") {
-                                            echo "<span class='badge badge-sm bg-secondary'>Absent</span>";
+                                            echo "<span id=status-";
+                                            echo $student->id;
+                                            echo " class='badge badge-sm bg-secondary'>Absent</span>";
                                         }
                                     
                                     ?>
                                 </td>
+                                <script>
+                                    studentIDs.push(<?php echo($student->id); ?>);
+                                </script>
                             </tr>
                             @endforeach
                         </tbody>
@@ -200,24 +210,13 @@
         const myChart = new Chart(ctx, {
             type: 'doughnut',
             data: {
-            labels: ["Attended","Absent"],
-            datasets: [{
-                label: 'attendance-donut',
-                data: [studentsattend, studentsabsent],
-                backgroundColor: ["#fb6340","#8392ab"]
-            }]
-            },
-            // options: {
-            //     legend: {
-            //         display: false,
-            //     },
-            //     tooltips: {
-            //         callbacks: {
-            //             label: tooltipItem => `${tooltipItem.yLabel}: ${tooltipItem.xLabel}`, 
-            //             title: () => null,
-            //         }
-            //     },
-            // },
+                labels: ["Attended","Absent"],
+                datasets: [{
+                    label: 'student-donut',
+                    data: [studentsattend, studentsabsent],
+                    backgroundColor: ["#fb6340","#8392ab"]
+                }]
+            }
         });
 </script>
 <script>
@@ -227,24 +226,72 @@
         const myChart2 = new Chart(ctx2, {
             type: 'doughnut',
             data: {
-            labels: ["Attended","Absent"],
-            datasets: [{
-                label: 'attendance-donut',
-                data: [teachersattend, teachersabsent],
-                backgroundColor: ["#fb6340","#8392ab"]
-            }]
-            },
-            // options: {
-            //     legend: {
-            //         display: false,
-            //     },
-            //     tooltips: {
-            //         callbacks: {
-            //             label: tooltipItem => `${tooltipItem.yLabel}: ${tooltipItem.xLabel}`, 
-            //             title: () => null,
-            //         }
-            //     },
-            // },
+                labels: ["Attended","Absent"],
+                datasets: [{
+                    label: 'teacher-donut',
+                    data: [teachersattend, teachersabsent],
+                    backgroundColor: ["#fb6340","#8392ab"]
+                }]
+            }
         });
 </script>
+<script>
+    $(document).ready(function(){
+        function getStudentChart() {
+            $.ajax({
+                type:'POST',
+                headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url:'student-att-chart',
+                success:function(data) {
+                    myChart.data.datasets[0].data = [data.studentsattendNum,data.studentsabsentNum];
+                    myChart.update();
+                }
+            });
+        }
+        function getTeacherChart() {
+            $.ajax({
+                type:'POST',
+                headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url:'teacher-att-chart',
+                success:function(data) {
+                    myChart2.data.datasets[0].data = [data.teachersattendNum,data.teachersabsentNum];
+                    myChart2.update();
+                }
+            });
+        }
+
+        // setInterval(function()
+        // {
+        //     getStudentChart();
+        //     getTeacherChart();
+        //     updateStudentStatus();
+        // }, 7000); //300000 is 5minutes in ms
+    });
+    setTimeout(function(){
+        window.location.reload(1);
+    }, 7000);
+</script>
+<!-- <script>
+    function updateStudentStatus() {
+        for (var i = 0; i < studentIDs.length; i++) {
+            var str = "status-"+studentIDs[i];
+            console.log(studentIDs[i]);
+            //Do something
+            // $.ajax({
+            //     type:'POST',
+            //     headers: {
+            //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            //     },
+            //     url:'student-status/{id}'+document.getElementById(str).value,
+            //     success:function(data) {
+            //         $("#ic_msg").html(data.ic_msg);
+            //     }
+            // });
+        }
+    }
+</script> -->
 @endpush

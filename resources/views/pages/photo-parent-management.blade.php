@@ -34,7 +34,7 @@
                                     </ul>
                                 </div>
                             @endif
-                            <form action="{{ url('photo-upload-parent/'.$id) }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ url('photo-upload-parent') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-6">
@@ -53,11 +53,11 @@
                     <div class="row">
                     @foreach ($photos as $photo)
                         <div class="col-md-4">
-                            <div class="card card-profile">
-                                <img src="{{ url('/images/'.$photo->path) }}" class="max-height-300" style="height:auto;width:auto;margin:auto;">
+                            <div class="card card-profile min-height-500 min-width-400">
+                                <img src="{{ url('/images/'.$photo->path) }}" class="max-height-300 max-width-300" style="height:auto;width:auto;margin:auto;">
                                 <div class="card-header text-center border-0 pt-0 pt-lg-2 pb-4 pb-lg-3">
                                 </div>
-                                <div class="card-body pt-0">
+                                <div class="card-footer pt-0">
                                     <div class="text-center mt-4">
                                         <h5>
                                             Photo</span>

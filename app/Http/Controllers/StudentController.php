@@ -54,6 +54,7 @@ class StudentController extends Controller
     public function registerParent(Request $request){
         $userId =  Auth::user()->id;
         $post = new Parents;
+        $post->fullname = Auth::user()->username;
         $post->user_id = $userId;
         $post->carplate = $request->input('carplate');
         $post->phone_number = $request->input('phone_number');

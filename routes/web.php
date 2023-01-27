@@ -19,10 +19,8 @@ Route::get('/', function () {
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
-// use App\Http\Controllers\RegisterController;
-use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\Auth\LoginController;
-// use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\ResetPassword;
 use App\Http\Controllers\ChangePassword;
@@ -82,10 +80,14 @@ Route::get('/', function () {return redirect('/dashboard');})->middleware('auth'
 
 	Route::get('/photos-child/{id}', [ PhotoController::class, 'photosChild' ]);
 	Route::post('/photo-upload-child/{id}', [ PhotoController::class, 'imageUploadChild' ])->name('photo-upload-child');
-	Route::get('/photos-parent/{id}', [ PhotoController::class, 'photosParent' ]);
-	Route::post('/photo-upload-parent/{id}', [ PhotoController::class, 'imageUploadParent' ])->name('photo-upload-parent');
+	Route::get('/photos-parent', [ PhotoController::class, 'photosParent' ])->name('photos-parent');
+	Route::post('/photo-upload-parent', [ PhotoController::class, 'imageUploadParent' ])->name('photo-upload-parent');
 
 	Route::get('/attendance-list', [AttendanceController::class, 'getList'])->name('attendance-list');
+	Route::post('/student-att-chart', [AttendanceController::class, 'getStudentAttendanceNumber']);
+	Route::post('/teacher-att-chart', [AttendanceController::class, 'getTeacherAttendanceNumber']);
+	Route::post('/student-att-list', [AttendanceController::class, 'getStudentList']);
+	Route::post('/student-status/{id}', [AttendanceController::class, 'getStudentStatus']);
 
 Route::group(['middleware' => 'auth'], function () {
 	Route::get('/virtual-reality', [PageController::class, 'vr'])->name('virtual-reality');
@@ -98,6 +100,6 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('/{page}', [PageController::class, 'index'])->name('page');
 	Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 });
-Auth::routes();
+// Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'dashboard'])->name('home');
