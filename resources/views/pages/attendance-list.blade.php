@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app', ['class' => 'g-sidenav-show bg-gray-100'])
 
 @section('content')
     @include('layouts.navbars.auth.topnav', ['title' => 'Attendance List'])
@@ -21,6 +21,8 @@
                                 <th>Class</th>
                                 <th>Pickup Schedule</th>
                                 <th>Status</th>
+                                <th>Time</th>
+                                <th>Picked By</th>
                             </tr>
                         </thead>
                         <script>
@@ -48,6 +50,8 @@
                                     
                                     ?>
                                 </td>
+                                <td>{{$student->time}}</td>
+                                <td>{{$student->parent}}</td>
                                 <script>
                                     studentIDs.push(<?php echo($student->id); ?>);
                                 </script>
@@ -60,6 +64,8 @@
                                 <th>Class</th>
                                 <th>Pickup Schedule</th>
                                 <th>Status</th>
+                                <th>Time</th>
+                                <th>Picked By</th>
                             </tr>
                         </tfoot>
                     </table>

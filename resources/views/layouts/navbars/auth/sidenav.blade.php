@@ -75,15 +75,15 @@
                     <span class="nav-link-text ms-1">Attendance</span>
                 </a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link" href="{{ route('notice-view-admin') }}">
                     <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="ni ni-bullet-list-67 text-dark text-sm opacity-10"></i>
                     </div>
                     <span class="nav-link-text ms-1">Parent Notice</span>
                 </a>
-            </li>
-            @else
+            </li> -->
+            @elseif(Auth::user()->role == 1)
             <li class="nav-item mt-3">
                 <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Pages</h6>
             </li>
@@ -103,14 +103,26 @@
                     <span class="nav-link-text ms-1">Children</span>
                 </a>
             </li>
+            @else
+            <li class="nav-item mt-3">
+                <h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Pages</h6>
+            </li>
             <li class="nav-item">
+                <a class="nav-link" href="{{ route('children-management') }}">
+                    <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="ni ni-bullet-list-67 text-dark text-sm opacity-10"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Children</span>
+                </a>
+            </li>
+            <!-- <li class="nav-item">
                 <a class="nav-link" href="{{ route('notice-view') }}">
                     <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="ni ni-bullet-list-67 text-dark text-sm opacity-10"></i>
                     </div>
                     <span class="nav-link-text ms-1">Notice of Absence</span>
                 </a>
-            </li>
+            </li> -->
             @endif
             <!-- <li class="nav-item">
                 <a class="nav-link {{ str_contains(request()->url(), 'tables') == true ? 'active' : '' }}" href="{{ route('page', ['page' => 'tables']) }}">

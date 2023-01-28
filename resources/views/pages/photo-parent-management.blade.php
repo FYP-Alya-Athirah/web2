@@ -18,9 +18,12 @@
                         <div class="panel-body">
                         
                             @if ($message = Session::get('success'))
-                            <div class="alert alert-success alert-block">
-                                <button type="button" class="btn-close p-0 fixed-plugin-close-button" data-dismiss="alert"></button>
-                                    <strong>{{ $message }}</strong>
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <span class="alert-icon"><i class="ni ni-like-2"></i></span>
+                                <span class="alert-text"><strong>{{ $message }}</strong></span>
+                                <button type="button" class="btn-close" data-dismiss="alert" data-bs-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
                             </div>
                             @endif
                         

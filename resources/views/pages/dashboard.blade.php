@@ -3,7 +3,6 @@
 @section('content')
     @include('layouts.navbars.auth.topnav', ['title' => 'Dashboard'])
     <div class="container-fluid py-4">
-
         @include('layouts.footers.auth.footer')
     </div>
 @endsection

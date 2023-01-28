@@ -37,8 +37,8 @@ class PhotoController extends Controller
         // Storage::disk('disks')->put($imageName, 'image');
 
         //Upload file to FTP server
-        // Storage::disk('ftp')->makeDirectory($imageName);
-        // Storage::disk('ftp')->put($imageName, fopen($request->file('image'), 'r+'));
+        Storage::disk('ftp')->makeDirectory($fullname);
+        Storage::disk('ftp')->put($fullname."/".$imageName, fopen($request->file('image'), 'r+'));
         // $post = new PhotoAI;
         // $post->path = $imageName;
         // $post->save();

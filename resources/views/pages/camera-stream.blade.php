@@ -13,40 +13,34 @@
 
                 </div>
                 <div class="card-body px-4 pt-0 pb-2">
-                    <!-- <div class="video-container">
-                        <img id="stream" src="http://192.168.100.15:81/stream" crossorigin>
-                    </div> -->
+
                     <div class="row">
                         <div class="col-md-6">
                             <div class="card card-profile">
-                                <img id="stream" src="http://192.168.100.15:81/stream" alt="Image placeholder" class="card max-height-500 min-height-500" style="height:auto;width:auto;margin:auto;" crossorigin>
+                                <!-- <img id="stream2" src="http://192.168.100.15:8000/stream.mjpg"class="card max-height-500 min-height-500" style="height:auto;width:auto;margin:auto;"> -->
+                                <img id="stream2" src="http://192.168.100.15:81/stream"class="card max-height-500 min-height-500" style="height:auto;width:auto;margin:auto;">
                                 <div class="card-header text-center border-0 pt-0 pt-lg-2 pb-4 pb-lg-3">
                                 </div>
                                 <div class="card-body pt-0">
                                     <div class="text-center mt-4">
                                         <h5>
-                                            Camera 1</span>
+                                            ESP32 CAM</span>
                                         </h5>
-                                        <div>
-                                            <i class="ni education_hat mr-2"></i>192.168.100.15:81
-                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="card card-profile">
-                                <img id="stream2" src="http://192.168.100.35:8000/stream.mjpg"class="card max-height-500 min-height-500" style="height:auto;width:auto;margin:auto;">
+                                <!-- <img id="stream2" src="http://192.168.100.35:8000/stream.mjpg"class="card max-height-500 min-height-500" style="height:auto;width:auto;margin:auto;"> -->
+                                <img id="stream2" src="http://192.168.100.19:5000/video_feed"class="card max-height-500 min-height-500" style="height:auto;width:auto;margin:auto;">
                                 <div class="card-header text-center border-0 pt-0 pt-lg-2 pb-4 pb-lg-3">
                                 </div>
                                 <div class="card-body pt-0">
                                     <div class="text-center mt-4">
                                         <h5>
-                                            Camera 2</span>
+                                            Raspberry Pi Zero</span>
                                         </h5>
-                                        <div>
-                                            <i class="ni education_hat mr-2"></i>192.168.100.35:8000
-                                        </div>
                                     </div>
                                 </div>
                             </div>

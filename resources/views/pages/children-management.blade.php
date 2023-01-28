@@ -19,8 +19,8 @@
                     </div>
                 </div>
                 @if($user->role == 0)   
-                    <div class="card-body px-4 pt-0 pb-2">
-                    <button type="button" class="btn btn-primary btn-sm ms-auto mb-0" data-bs-toggle="modal" data-bs-target="#registerParentModal">
+                    <div class="card-body px-4 pt-0 pb-2 my-6 m-auto">
+                    <button type="button" class="btn btn-primary btn-lg ms-auto mb-0" data-bs-toggle="modal" data-bs-target="#registerParentModal">
                         Register Parent
                     </button>
                     </div>
