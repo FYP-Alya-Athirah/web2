@@ -58,17 +58,10 @@
                         <div class="col-md-4">
                             <div class="card card-profile min-height-500 min-width-400">
                                 <img src="{{ url('/images/'.$photo->path) }}" class="max-height-300 max-width-300" style="height:auto;width:auto;margin:auto;">
-                                <div class="card-header text-center border-0 pt-0 pt-lg-2 pb-4 pb-lg-3">
-                                </div>
                                 <div class="card-footer pt-0">
-                                    <div class="text-center mt-4">
-                                        <h5>
-                                            Photo</span>
-                                        </h5>
-                                        <!-- <div>
-                                            <i class="ni education_hat mr-2"></i>Uploaded ...
-                                        </div> -->
-                                    </div>
+                                    <a class="btn btn-danger btn-xs" style="float: right;" href="{{url('/photo-delete/'.$photo->path) }}" role="button" id="deleteButton">
+                                        <img border="0" src="{{ asset('/img/icons/garbage.png') }}" width="20" height="20">
+                                    </a>                                    
                                 </div>
                             </div>
                         </div>

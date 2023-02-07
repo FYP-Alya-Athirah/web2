@@ -16,6 +16,7 @@ class AttendanceController extends Controller
         ->get();
         $studentsAttend = DB::table('students')
         ->where('attend','1')
+        ->orWhere('attend','2')
         ->get();
         $studentsAbsent = DB::table('students')
         ->where('attend','0')
@@ -28,6 +29,7 @@ class AttendanceController extends Controller
         ->get();
         $teachersAttend = DB::table('teachers')
         ->where('attend','1')
+        ->orWhere('attend','2')
         ->get();
         $teachersAbsent = DB::table('teachers')
         ->where('attend','0')
@@ -40,19 +42,63 @@ class AttendanceController extends Controller
             'teachers' => $teachers,'teachersattendNum' => $teachersattendNum,'teachersabsentNum' => $teachersabsentNum,
         ]);
     }
-    public function getStudentList()
-    {
+    public function getStudentList(Request $request){
+
+        ## Read value
+        $draw = $request->get('draw');
+        $start = $request->get("start");
+        $rowperpage = $request->get("length"); // Rows display per page
+   
+        $columnIndex_arr = $request->get('order');
+        $columnName_arr = $request->get('columns');
+        $order_arr = $request->get('order');
+        $search_arr = $request->get('search');
+   
+        $columnIndex = $columnIndex_arr[0]['column']; // Column index
+        $columnName = $columnName_arr[$columnIndex]['data']; // Column name
+        $columnSortOrder = $order_arr[0]['dir']; // asc or desc
+        $searchValue = $search_arr['value']; // Search value
+   
         // students list
-        $students = DB::table('students')
-        ->get();
-
-        // return view('pages.attendance-list', [
-        //     'students' => $students
-        // ]);
-        // $students = Students::select('fullname', 'class', 'pickup_session', 'attend')->get();
-        // return DataTables::of($students)->make();
-
-        return response()->json(array('students' => $students), 200);
+        // $records = DB::table('students')
+        // ->get();
+        // Total records
+        $totalRecords = Students::select('count(*) as allcount')->count();
+        $totalRecordswithFilter = Students::select('count(*) as allcount')->where('name', 'like', '%' .$searchValue . '%')->count();
+   
+        // Fetch records
+        $records = Students::orderBy($columnName,$columnSortOrder)
+          ->where('students.fullname', 'like', '%' .$searchValue . '%')
+          ->select('students.*')
+          ->skip($start)
+          ->take($rowperpage)
+          ->get();
+   
+        $data_arr = array();
+        
+        foreach($records as $record){
+           $id = $record->id;
+           $fullname = $record->fullname;
+           $class = $record->class;
+           $pickup_session = $record->pickup_session;
+   
+           $data_arr[] = array(
+             "id" => $id,
+             "fullname" => $fullname,
+             "class" => $class,
+             "pickup_session" => $pickup_session,
+           );
+        }
+   
+        $response = array(
+           "draw" => intval($draw),
+           "iTotalRecords" => $totalRecords,
+           "iTotalDisplayRecords" => $totalRecordswithFilter,
+           "aaData" => $data_arr
+        );
+   
+        echo json_encode($response);
+        exit;
     }
     public function getStudentStatus($id)
     {

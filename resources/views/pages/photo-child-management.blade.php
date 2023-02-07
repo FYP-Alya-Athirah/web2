@@ -67,9 +67,9 @@
                                 </div>
                                 <div class="card-footer pt-0">
                                     <div class="text-center mt-4">
-                                        <div>
-                                            <i class="ni education_hat mr-2"></i>Photo
-                                        </div>
+                                        <a class="btn btn-danger btn-xs" style="float: right;" href="{{url('/photo-delete/'.$photo->path) }}" role="button" id="deleteButton">
+                                            <img border="0" src="{{ asset('/img/icons/garbage.png') }}" width="20" height="20">
+                                        </a>  
                                     </div>
                                 </div>
                             </div>

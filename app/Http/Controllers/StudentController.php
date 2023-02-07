@@ -11,12 +11,14 @@ use App\Models\ParentStudent;
 use App\Models\User;
 use phpDocumentor\Reflection\DocBlock\Tags\Var_;
 use Symfony\Component\VarDumper\VarDumper;
+use Torann\GeoIP\Facades\GeoIP;
 
 class StudentController extends Controller
 {
     public function getList()
     {
         $students = DB::table('students')->get();
+
         return view('pages.students-management', ['students' => $students]);
     }
     
@@ -127,14 +129,6 @@ class StudentController extends Controller
             ->where('parent_student.parent_id', '=', $parentID)
             ->get();
 
-            //join tables students-parent
-            // $photos = DB::table('photo_laravel')
-            // ->select('students.id','photo_laravel.role',
-            // 'photo_laravel.path','students.birthday')
-            // ->join('students','students.id','=','photo_laravel.person_id')
-            // ->where('parent_id', '=', $parentID)
-            // ->get();
-
             return view('pages.children-management', 
                 ['students' => $students,
                 // 'photos' => $photos,
@@ -158,6 +152,7 @@ class StudentController extends Controller
         }
         return response()->json(array('ic_msg'=> $msg), 200);
     }
+    
     // if user is not a parent -> show card to ask to be parent
     // else show children list
 }

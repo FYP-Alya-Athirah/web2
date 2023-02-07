@@ -82,12 +82,15 @@ Route::get('/', function () {return redirect('/dashboard');})->middleware('auth'
 	Route::post('/photo-upload-child/{id}', [ PhotoController::class, 'imageUploadChild' ])->name('photo-upload-child');
 	Route::get('/photos-parent', [ PhotoController::class, 'photosParent' ])->name('photos-parent');
 	Route::post('/photo-upload-parent', [ PhotoController::class, 'imageUploadParent' ])->name('photo-upload-parent');
+	Route::get('/photo-delete/{fullname}/{imagepath}', [ PhotoController::class, 'imageDelete' ]);
 
 	Route::get('/attendance-list', [AttendanceController::class, 'getList'])->name('attendance-list');
 	Route::post('/student-att-chart', [AttendanceController::class, 'getStudentAttendanceNumber']);
 	Route::post('/teacher-att-chart', [AttendanceController::class, 'getTeacherAttendanceNumber']);
 	Route::post('/student-att-list', [AttendanceController::class, 'getStudentList']);
 	Route::post('/student-status/{id}', [AttendanceController::class, 'getStudentStatus']);
+
+
 
 Route::group(['middleware' => 'auth'], function () {
 	Route::get('/virtual-reality', [PageController::class, 'vr'])->name('virtual-reality');

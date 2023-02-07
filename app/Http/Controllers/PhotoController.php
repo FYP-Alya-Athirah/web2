@@ -40,7 +40,9 @@ class PhotoController extends Controller
         Storage::disk('ftp')->makeDirectory($fullname);
         Storage::disk('ftp')->put($fullname."/".$imageName, fopen($request->file('image'), 'r+'));
         // $post = new PhotoAI;
-        // $post->path = $imageName;
+        // $post->path = $fullname.'/'.$imageName;
+        // $post->person_id = $id;
+        // $post->role = $role;
         // $post->save();
 
 
@@ -101,19 +103,26 @@ class PhotoController extends Controller
     public function imageDeleteChild($id, $role, Request $request){
 
     }
-    public function imageDelete($fullname, $image_path)
+    public function imageDelete($fullname,$imagepath)
     {
         // path = fullname+path
         // $fullname = "";
         // $image_path = "";
-        $path = $fullname."/".$image_path;
+        $path = $fullname.'/'.$imagepath;
         // delete in ftp
         Storage::disk('ftp')->delete($path);
 
         // delete in public
-        if (File::exists(public_path($path))) {
-            File::delete(public_path($path));
+        if (File::exists(public_path('images').'/'.$path)) {
+            File::delete(public_path('images').'/'.$path);
         }
+        File::delete(public_path($path));
+
+        // delete in database
+        $photo = PhotoLaravel::where('path', $path)->firstorfail()->delete();
+        return back()
+            ->with('success','You have successfully deleted the image.')
+        ; 
     }
 
     public function photosChild($id){

@@ -25,9 +25,6 @@
                                 <th>Picked By</th>
                             </tr>
                         </thead>
-                        <script>
-                            var studentIDs = [];
-                        </script>
                         <tbody>
                             @foreach ($students as $student)
                             <tr>
@@ -47,14 +44,14 @@
                                             echo $student->id;
                                             echo " class='badge badge-sm bg-secondary'>Absent</span>";
                                         }
+                                        elseif ($student->attend == "2") {
+                                            echo "<span class='badge badge-sm bg-info'>Dismissed</span>";
+                                        }
                                     
                                     ?>
                                 </td>
                                 <td>{{$student->time}}</td>
                                 <td>{{$student->parent}}</td>
-                                <script>
-                                    studentIDs.push(<?php echo($student->id); ?>);
-                                </script>
                             </tr>
                             @endforeach
                         </tbody>
@@ -74,6 +71,7 @@
                 </div>
             </div>
         </div>
+
         <div class="col-12 col-md-4" style="display: flex;">
             <div class="card mb-4">
                 <div class="card-header pb-0">
@@ -123,6 +121,9 @@
                                         }
                                         elseif ($teacher->attend == "0") {
                                             echo "<span class='badge badge-sm bg-secondary'>Absent</span>";
+                                        }
+                                        elseif ($teacher->attend == "2") {
+                                            echo "<span class='badge badge-sm bg-info'>Dismissed</span>";
                                         }
                                     
                                     ?>
@@ -190,9 +191,9 @@
             }, false)
             })
     })()
-    // setTimeout(function(){
-    //     window.location.reload(1);
-    // }, 5000);
+    setTimeout(function(){
+        window.location.reload(1);
+    }, 7000);
 
     $(document).ready(function () {
         $('#students-table').DataTable();
@@ -203,10 +204,6 @@
 
 </script>
 
-<!-- jQuery Script -->
-<!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
-<!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script> -->
 <!-- Datatable Script -->
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
 <script>
@@ -241,63 +238,11 @@
             }
         });
 </script>
-<script>
-    $(document).ready(function(){
-        function getStudentChart() {
-            $.ajax({
-                type:'POST',
-                headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                url:'student-att-chart',
-                success:function(data) {
-                    myChart.data.datasets[0].data = [data.studentsattendNum,data.studentsabsentNum];
-                    myChart.update();
-                }
-            });
-        }
-        function getTeacherChart() {
-            $.ajax({
-                type:'POST',
-                headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                url:'teacher-att-chart',
-                success:function(data) {
-                    myChart2.data.datasets[0].data = [data.teachersattendNum,data.teachersabsentNum];
-                    myChart2.update();
-                }
-            });
-        }
-
-        // setInterval(function()
-        // {
-        //     getStudentChart();
-        //     getTeacherChart();
-        //     updateStudentStatus();
-        // }, 7000); //300000 is 5minutes in ms
-    });
+<!-- <script>
     setTimeout(function(){
         window.location.reload(1);
     }, 7000);
-</script>
-<!-- <script>
-    function updateStudentStatus() {
-        for (var i = 0; i < studentIDs.length; i++) {
-            var str = "status-"+studentIDs[i];
-            console.log(studentIDs[i]);
-            //Do something
-            // $.ajax({
-            //     type:'POST',
-            //     headers: {
-            //     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            //     },
-            //     url:'student-status/{id}'+document.getElementById(str).value,
-            //     success:function(data) {
-            //         $("#ic_msg").html(data.ic_msg);
-            //     }
-            // });
-        }
-    }
 </script> -->
+
+
 @endpush
